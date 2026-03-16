@@ -1,10 +1,12 @@
 ﻿using Bindito.Core;
 using Timberborn.Automation;
+using Timberborn.PlayerDataSystem;
 using Timberborn.QuickNotificationSystem;
 using Timberborn.SelectionSystem;
 using Timberborn.SingletonSystem;
 using UnityEngine;
 using System;
+using System.IO;
 
 namespace Calloatti.AutoTools
 {
@@ -15,8 +17,11 @@ namespace Calloatti.AutoTools
     Global
   }
 
-  public partial class AutoMapService : ILoadableSingleton, IPostLoadableSingleton, IDisposable
+  public partial class AutoMapService : ILoadableSingleton, IPostLoadableSingleton, IUnloadableSingleton, IDisposable
   {
+    // Updated filename to AutoTools.txt
+    private readonly string _configPath = Path.Combine(PlayerDataFileService.PlayerDataDirectory, "AutoTools.txt");
+
     private readonly AutomatorRegistry _automatorRegistry;
     private readonly EventBus _eventBus;
     private readonly AutoMapInputService _inputService;
@@ -26,11 +31,7 @@ namespace Calloatti.AutoTools
     private MapDisplayState _currentState = MapDisplayState.Hidden;
     private Automator _singleVisualizedAutomator;
     private Material _lineMaterial;
-
-    // Tracks if the graph topology has changed and needs a full rebuild
     private bool _isDirty = true;
-
-    // Tracks the currently visible partition ID to prevent notification spam
     private int _lastActivePartitionId = -1;
 
     [Inject]
@@ -51,12 +52,61 @@ namespace Calloatti.AutoTools
     public void Load()
     {
       InitializeVisuals();
+
+      try
+      {
+        if (File.Exists(_configPath))
+        {
+          string content = File.ReadAllText(_configPath).Trim();
+          if (Enum.TryParse(content, out MapDisplayState restoredState))
+          {
+            _currentState = restoredState;
+          }
+        }
+        else
+        {
+          // Create default file if it doesn't exist (Default: Hidden)
+          SaveState();
+        }
+      }
+      catch (Exception e)
+      {
+        Debug.LogWarning($"[AutoTools] Load error: {e.Message}");
+      }
     }
 
     public void PostLoad()
     {
       _eventBus.Register(this);
       _inputService.OnToggleAutoMap += ToggleAutoMap;
+
+      foreach (Automator automator in _automatorRegistry.Automators)
+      {
+        automator.RelationsChanged += OnRelationsChanged;
+      }
+
+      RefreshVisuals(suppressInfoNotification: true);
+    }
+
+    public void Unload()
+    {
+      SaveState();
+    }
+
+    public void SaveState()
+    {
+      try
+      {
+        if (!Directory.Exists(PlayerDataFileService.PlayerDataDirectory))
+        {
+          Directory.CreateDirectory(PlayerDataFileService.PlayerDataDirectory);
+        }
+        File.WriteAllText(_configPath, _currentState.ToString());
+      }
+      catch (Exception e)
+      {
+        Debug.LogError($"[AutoTools] Save error: {e.Message}");
+      }
     }
 
     public void Dispose()
@@ -64,7 +114,10 @@ namespace Calloatti.AutoTools
       _eventBus.Unregister(this);
       _inputService.OnToggleAutoMap -= ToggleAutoMap;
 
-      UnsubscribeFromRelations(); // <-- ADDED: Safely unhook the C# event if a building was selected during unload
+      foreach (Automator automator in _automatorRegistry.Automators)
+      {
+        automator.RelationsChanged -= OnRelationsChanged;
+      }
 
       OnDispose();
     }

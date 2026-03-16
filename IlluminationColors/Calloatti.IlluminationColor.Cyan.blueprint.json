@@ -1,10 +1,10 @@
 ﻿{
     "IlluminationColorSpec":  {
-                                  "Id":  "Calloatti.HeatWave",
+                                  "Id":  "Calloatti.Cyan",
                                   "Color":  {
-                                                "g":  0.4784,
-                                                "r":  1,
-                                                "b":  0,
+                                                "g":  1,
+                                                "r":  0,
+                                                "b":  1,
                                                 "a":  1
                                             }
                               },

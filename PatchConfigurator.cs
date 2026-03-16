@@ -10,7 +10,7 @@ namespace Calloatti.AutoTools
   [Context("MapEditor")]
   internal class PatchConfigurator : IConfigurator
   {
-    private const string HarmonyId = "com.calloatti.autotools";
+    private const string HarmonyId = "calloatti.autotools";
     private static Harmony _harmony;
 
     public void Configure(IContainerDefinition containerDefinition)

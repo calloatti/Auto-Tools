@@ -8,53 +8,38 @@ namespace Calloatti.AutoTools
 {
   public partial class AutoMapService
   {
-    private Automator _subscribedAutomator;
-
     [OnEvent]
     public void OnEntityInitialized(EntityInitializedEvent e)
     {
-      if (e.Entity.HasComponent<Automator>()) MarkDirty();
+      if (e.Entity.HasComponent<Automator>())
+      {
+        e.Entity.GetComponent<Automator>().RelationsChanged += OnRelationsChanged;
+        MarkDirty();
+      }
     }
 
     [OnEvent]
     public void OnEntityDeleted(EntityDeletedEvent e)
     {
-      if (e.Entity.HasComponent<Automator>()) MarkDirty();
+      if (e.Entity.HasComponent<Automator>())
+      {
+        e.Entity.GetComponent<Automator>().RelationsChanged -= OnRelationsChanged;
+        MarkDirty();
+      }
     }
 
     [OnEvent]
     public void OnSelectableObjectSelected(SelectableObjectSelectedEvent e)
     {
-      Automator newSelection = e.SelectableObject.GetComponent<Automator>();
-
-      if (newSelection != null) SubscribeToRelations(newSelection);
-      else UnsubscribeFromRelations();
-
-      // Silently update the drawing WITHOUT triggering a heavy rebuild (unless dirty)
+      // Re-trigger visual logic so Partition mode knows which lines to show
       RefreshVisuals();
     }
 
     [OnEvent]
     public void OnSelectableObjectUnselected(SelectableObjectUnselectedEvent e)
     {
-      UnsubscribeFromRelations();
+      // Re-trigger visual logic so lines hide when nothing is selected
       RefreshVisuals();
-    }
-
-    private void SubscribeToRelations(Automator automator)
-    {
-      UnsubscribeFromRelations();
-      _subscribedAutomator = automator;
-      _subscribedAutomator.RelationsChanged += OnRelationsChanged;
-    }
-
-    private void UnsubscribeFromRelations()
-    {
-      if (_subscribedAutomator != null)
-      {
-        _subscribedAutomator.RelationsChanged -= OnRelationsChanged;
-        _subscribedAutomator = null;
-      }
     }
 
     private void OnRelationsChanged(object sender, EventArgs e)

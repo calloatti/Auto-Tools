@@ -19,7 +19,7 @@ namespace Calloatti.AutoTools
     static void Prefix_EntityNameDialog_Show()
     {
       _isRenamingInProgress = true;
-      Debug.Log("[AutoTools RenamePatch] EntityNameDialog.Show started. Flag set to TRUE.");
+      Debug.Log("[AutoTools] EntityNameDialog.Show started. Flag set to TRUE.");
     }
 
     // 2. Intercept the end of the Rename dialog call
@@ -28,7 +28,7 @@ namespace Calloatti.AutoTools
     static void Postfix_EntityNameDialog_Show()
     {
       _isRenamingInProgress = false;
-      Debug.Log("[AutoTools RenamePatch] EntityNameDialog.Show finished. Flag set to FALSE.");
+      Debug.Log("[AutoTools] EntityNameDialog.Show finished. Flag set to FALSE.");
     }
 
     // 3. Patch the Builder to check the flag before applying the limit
@@ -41,7 +41,7 @@ namespace Calloatti.AutoTools
       {
         // This now runs AFTER the vanilla code sets it to 24
         ____input.maxLength = 64;
-        Debug.Log($"[AutoTools RenamePatch] SUCCESS: maxLength securely overridden to {____input.maxLength}!");
+        Debug.Log($"[AutoTools] SUCCESS: maxLength securely overridden to {____input.maxLength}!");
       }
     }
   }

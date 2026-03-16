@@ -12,15 +12,15 @@ namespace Calloatti.AutoTools
       {
         case MapDisplayState.Hidden:
           _currentState = MapDisplayState.Global;
-          _notificationService.SendNotification("Auto Map: GLOBAL");
+          _notificationService.SendNotification("Automation Map: GLOBAL");
           break;
         case MapDisplayState.Global:
           _currentState = MapDisplayState.Single; // This is the Partition mode
-          _notificationService.SendNotification("Auto Map: PARTITION");
+          _notificationService.SendNotification("Automation Map: PARTITION");
           break;
         case MapDisplayState.Single:
           _currentState = MapDisplayState.Hidden;
-          _notificationService.SendNotification("Auto Map: OFF");
+          _notificationService.SendNotification("Automation Map: OFF");
           break;
       }
 

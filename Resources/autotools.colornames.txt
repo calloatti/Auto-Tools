@@ -1,11 +1,12 @@
 // Timberborn Colors
 #85BDCC,Automator (Default On)
+#2996CC,Bot
 #D97D20,Default
 #12161A,Dimmed (Default Off)
 #1FCC1F,Green
 #CC3200,Orange
 #E60000,Red
-// Auto Tools Colors
+// Automation Tools Colors
 #1AFF91,Aqua
 #00B5FF,Azure
 #ABFF00,Chartreuse

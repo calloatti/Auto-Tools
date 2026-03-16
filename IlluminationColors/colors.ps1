@@ -1,10 +1,7 @@
 # Get the current folder where the script is running
 $PSScriptRoot = Get-Location
 $inputFile = Join-Path $PSScriptRoot "colors.txt"
-$outputFolder = Join-Path $PSScriptRoot "GeneratedBlueprints"
 
-# Create output folder if missing
-if (!(Test-Path $outputFolder)) { New-Item -ItemType Directory -Path $outputFolder }
 
 # Starting Order for the presets
 $currentOrder = 11000
@@ -51,7 +48,7 @@ Get-Content $inputFile | ForEach-Object {
     }
     
     $fileName = "Calloatti.IlluminationColor.$cleanName.blueprint.json"
-    $jsonObj | ConvertTo-Json -Depth 5 | Out-File (Join-Path $outputFolder $fileName) -Encoding utf8
+    $jsonObj | ConvertTo-Json -Depth 5 | Out-File (Join-Path $PSScriptRoot $fileName) -Encoding utf8
     
     $currentOrder += 10
     Write-Host "Created Blueprint for: $name (Hex: #$hex, Order: $currentOrder)"

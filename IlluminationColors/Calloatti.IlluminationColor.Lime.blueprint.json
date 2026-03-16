@@ -3,12 +3,12 @@
                                   "Id":  "Calloatti.Lime",
                                   "Color":  {
                                                 "g":  1,
-                                                "r":  0.6667,
-                                                "b":  0.1961,
+                                                "r":  0,
+                                                "b":  0,
                                                 "a":  1
                                             }
                               },
     "IlluminationPresetSpec":  {
-                                   "Order":  11070
+                                   "Order":  11020
                                }
 }

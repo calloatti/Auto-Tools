@@ -1,25 +1,9 @@
 ﻿#FFFFFF,White
-#FE01B1,Bright Pink
-#FF355E,Radical Red
-#FD5240,Ogre Odor
-#FF7A00,Heat Wave
-#FFAA1D,Bright Yellow
-#FFFF31,Daffodil
-#DDE26A,Booger Buster
-#AAFF32,Lime
-#21FC0D,Electric Green
-#0CB577,Green Teal
-#13EAC9,Aqua
-#0FFEF9,Bright Turquoise
-#02CCFE,Bright Sky Blue
-#1D5DEC,Azul
-#0652FF,Electric Blue
-#3A18B1,Indigo Blue
-#632DE9,Purple Blue
-#87421F,Fuzzy Wuzzy
-#AD0AFD,Bright Violet
-#D100FF,ElectricPurple
-#ED0DD9,Fuchsia
-#F504C9,Hot Magenta
-#E936A7,Frostbite
-#FE46A5,Barbie Pink
+#FFFF00,Yellow
+#00FF00,Lime
+#00FFFF,Cyan
+#0000FF,Blue
+#FF00FF,Magenta
+#00BFFF,DeepSkyBlue
+#7FFF00,Chartreuse
+#FF007C,Winter Sky
