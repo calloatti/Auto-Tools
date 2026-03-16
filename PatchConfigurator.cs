@@ -1,11 +1,13 @@
 ﻿using Bindito.Core;
 using HarmonyLib;
 using UnityEngine;
+using Timberborn.AssetSystem;
+using Timberborn.SingletonSystem;
 
 namespace Calloatti.AutoTools
 {
   [Context("Game")]
-  [Context("MapEditor")] // Good practice so it works in the map editor too!
+  [Context("MapEditor")]
   internal class PatchConfigurator : IConfigurator
   {
     private const string HarmonyId = "com.calloatti.autotools";
@@ -13,20 +15,40 @@ namespace Calloatti.AutoTools
 
     public void Configure(IContainerDefinition containerDefinition)
     {
-      // The null check ensures we don't patch twice if a player loads a save, 
-      // goes to the main menu, and loads another save.
+      containerDefinition.Bind<ColorNamesLoader>().AsSingleton();
+
       if (_harmony == null)
       {
         _harmony = new Harmony(HarmonyId);
-
-        // 1. Apply all attribute-based patches automatically
-        // This will find AutoRenamePatch (RenameIsolationPatch) and apply it.
         _harmony.PatchAll(typeof(PatchConfigurator).Assembly);
-
-        // 2. Apply your manual Reflection-based patches
-        PatchColorNameLabel.Apply(_harmony);
+        PatchColor.Apply(_harmony);
 
         Debug.Log($"[{HarmonyId}] All Harmony patches applied successfully!");
+      }
+    }
+  }
+
+  internal class ColorNamesLoader : ILoadableSingleton
+  {
+    private readonly IAssetLoader _assetLoader;
+
+    public ColorNamesLoader(IAssetLoader assetLoader)
+    {
+      _assetLoader = assetLoader;
+    }
+
+    public void Load()
+    {
+      // Updated to match your exact internal asset path!
+      var textAsset = _assetLoader.LoadSafe<TextAsset>("resources/autotools.colornames");
+
+      if (textAsset != null)
+      {
+        PatchColor.LoadColorNamesFromText(textAsset.text);
+      }
+      else
+      {
+        Debug.LogWarning("[AutoTools] Could not find 'resources/autotools.colornames' text asset.");
       }
     }
   }

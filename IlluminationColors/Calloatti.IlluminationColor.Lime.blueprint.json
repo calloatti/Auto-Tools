@@ -1,14 +1,14 @@
 ﻿{
     "IlluminationColorSpec":  {
-                                  "Id":  "Calloatti.Turquoise",
+                                  "Id":  "Calloatti.Lime",
                                   "Color":  {
                                                 "g":  1,
-                                                "r":  0,
-                                                "b":  0.75,
+                                                "r":  0.6667,
+                                                "b":  0.1961,
                                                 "a":  1
                                             }
                               },
     "IlluminationPresetSpec":  {
-                                   "Order":  10110
+                                   "Order":  11070
                                }
 }

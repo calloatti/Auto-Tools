@@ -1,0 +1,14 @@
+﻿{
+    "IlluminationColorSpec":  {
+                                  "Id":  "Calloatti.FuzzyWuzzy",
+                                  "Color":  {
+                                                "g":  0.2588,
+                                                "r":  0.5294,
+                                                "b":  0.1216,
+                                                "a":  1
+                                            }
+                              },
+    "IlluminationPresetSpec":  {
+                                   "Order":  11170
+                               }
+}

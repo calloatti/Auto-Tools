@@ -11,7 +11,13 @@ namespace Calloatti.AutoTools
   public partial class AutoMapService
   {
     private GameObject _masterContainer;
-    private readonly List<GameObject> _lineObjects = new List<GameObject>();
+
+    // Caching structural components
+    private readonly List<GameObject> _networkContainers = new List<GameObject>();
+    private readonly Dictionary<Automator, GameObject> _automatorToNetwork = new Dictionary<Automator, GameObject>();
+
+    // NEW: Cache the ID and the Item Count for each container
+    private readonly Dictionary<GameObject, (int id, int count)> _networkInfo = new Dictionary<GameObject, (int id, int count)>();
 
     // Golden Ratio Tracking (Now using an int ID to prevent memory leaks)
     private readonly Dictionary<int, int> _partitionIndices = new Dictionary<int, int>();
@@ -27,23 +33,64 @@ namespace Calloatti.AutoTools
       _lineMaterial.renderQueue = 4000;
     }
 
-    private void GenerateSnapshot()
+    // A unified approach: Pre-calculate everything and sort it into cached containers
+    private void RebuildAllLines()
     {
       ClearLines();
-      foreach (Automator transmitter in _automatorRegistry.Transmitters)
+      HashSet<Automator> visited = new HashSet<Automator>();
+
+      foreach (Automator automator in _automatorRegistry.Transmitters)
       {
-        DrawTransmitterConnections(transmitter);
+        // Skip if this automator was already processed as part of another network
+        if (visited.Contains(automator)) continue;
+
+        // Traverse to find the whole interconnected partition
+        HashSet<Automator> network = GetConnectedPartition(automator);
+
+        // Create a dedicated parent container for this specific partition
+        GameObject networkContainer = new GameObject("NetworkContainer");
+        networkContainer.transform.SetParent(_masterContainer.transform);
+        _networkContainers.Add(networkContainer);
+
+        // Store the ID and the Count for the notification system
+        int partitionId = GetPartitionId(automator.Partition);
+        _networkInfo[networkContainer] = (partitionId, network.Count);
+
+        // Map every building in this partition to this container for O(1) lookups later
+        foreach (Automator member in network)
+        {
+          visited.Add(member);
+          _automatorToNetwork[member] = networkContainer;
+
+          if (member.IsTransmitter) DrawTransmitterConnections(member, networkContainer.transform);
+        }
       }
     }
 
-    private void GenerateSingleSnapshot(Automator selectedAutomator)
+    public void SetAllPartitionsActive(bool active)
     {
-      ClearLines();
-      HashSet<Automator> partitionMembers = GetConnectedPartition(selectedAutomator);
-      foreach (Automator member in partitionMembers)
+      foreach (GameObject container in _networkContainers)
       {
-        if (member.IsTransmitter) DrawTransmitterConnections(member);
+        if (container != null) container.SetActive(active);
       }
+    }
+
+    // Modified to return the active GameObject so the Input script can read it
+    public GameObject ShowOnlyPartition(Automator selectedAutomator)
+    {
+      // Find which container this building belongs to
+      _automatorToNetwork.TryGetValue(selectedAutomator, out GameObject activeContainer);
+
+      // Instantly toggle GameObjects based on the selection
+      foreach (GameObject container in _networkContainers)
+      {
+        if (container != null)
+        {
+          container.SetActive(container == activeContainer);
+        }
+      }
+
+      return activeContainer;
     }
 
     private HashSet<Automator> GetConnectedPartition(Automator startNode)
@@ -67,19 +114,26 @@ namespace Calloatti.AutoTools
       return network;
     }
 
-    public Color GetPartitionColor(AutomatorPartition partition)
+    // Extracted the ID generation so we can use it for both colors and notifications
+    public int GetPartitionId(AutomatorPartition partition)
     {
-      if (partition == null) return Color.white;
+      if (partition == null) return -1;
 
-      // Use the integer hash code as the ID to avoid holding strong object references
       int partitionId = partition.GetHashCode();
 
-      // Assign a unique, sequential index to the partition ID if we haven't seen it yet
       if (!_partitionIndices.TryGetValue(partitionId, out int index))
       {
         index = _nextPartitionIndex++;
         _partitionIndices[partitionId] = index;
       }
+
+      return index;
+    }
+
+    public Color GetPartitionColor(AutomatorPartition partition)
+    {
+      int index = GetPartitionId(partition);
+      if (index == -1) return Color.white;
 
       // Golden ratio conjugate to maximize hue spacing
       float goldenRatioConjugate = 0.618033988749895f;
@@ -89,7 +143,7 @@ namespace Calloatti.AutoTools
       return Color.HSVToRGB(hue, 0.85f, 0.95f);
     }
 
-    private void DrawTransmitterConnections(Automator transmitter)
+    private void DrawTransmitterConnections(Automator transmitter, Transform parentContainer)
     {
       if (transmitter.OutputConnections.Count == 0) return;
 
@@ -100,15 +154,14 @@ namespace Calloatti.AutoTools
       foreach (AutomatorConnection connection in transmitter.OutputConnections)
       {
         if (connection.Receiver == null) continue;
-        CreateLine(startPos, GetCenterPosition(connection.Receiver), baseColor);
+        CreateLine(startPos, GetCenterPosition(connection.Receiver), baseColor, parentContainer);
       }
     }
 
-    private void CreateLine(Vector3 start, Vector3 end, Color color)
+    private void CreateLine(Vector3 start, Vector3 end, Color color, Transform parentContainer)
     {
       GameObject lineObj = new GameObject("AutoLine");
-      lineObj.transform.SetParent(_masterContainer.transform);
-      _lineObjects.Add(lineObj);
+      lineObj.transform.SetParent(parentContainer); // Bind to the specific partition's container
 
       LineRenderer lr = lineObj.AddComponent<LineRenderer>();
       lr.material = _lineMaterial;
@@ -179,10 +232,6 @@ namespace Calloatti.AutoTools
           ? centerComponent.WorldCenterAtBaseZ
           : automator.GameObject.transform.position;
 
-      // 2. Add the logical grid height so it sits on top of the block's bounding box
-      //var blockObject = automator.GetComponent<BlockObject>();
-      //if (blockObject != null) pos.y += blockObject.Blocks.Size.z;
-
       // 3. Add exactly 1 meter higher, as requested
       pos.y += 0.5f;
 
@@ -191,8 +240,10 @@ namespace Calloatti.AutoTools
 
     private void ClearLines()
     {
-      foreach (GameObject obj in _lineObjects) if (obj != null) UnityEngine.Object.Destroy(obj);
-      _lineObjects.Clear();
+      foreach (GameObject obj in _networkContainers) if (obj != null) UnityEngine.Object.Destroy(obj);
+      _networkContainers.Clear();
+      _automatorToNetwork.Clear();
+      _networkInfo.Clear(); // Clear the info cache too
     }
 
     private void SetVisibility(bool visible)

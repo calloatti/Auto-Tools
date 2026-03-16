@@ -9,6 +9,6 @@
                                             }
                               },
     "IlluminationPresetSpec":  {
-                                   "Order":  10000
+                                   "Order":  9999
                                }
 }

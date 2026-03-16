@@ -1,14 +1,14 @@
 ﻿{
     "IlluminationColorSpec":  {
-                                  "Id":  "Calloatti.Aqua",
+                                  "Id":  "Calloatti.HotMagenta",
                                   "Color":  {
-                                                "g":  0.9176,
-                                                "r":  0.0745,
+                                                "g":  0.0157,
+                                                "r":  0.9608,
                                                 "b":  0.7882,
                                                 "a":  1
                                             }
                               },
     "IlluminationPresetSpec":  {
-                                   "Order":  11100
+                                   "Order":  11210
                                }
 }

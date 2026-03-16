@@ -1,14 +1,14 @@
 ﻿{
     "IlluminationColorSpec":  {
-                                  "Id":  "Calloatti.Cyan",
+                                  "Id":  "Calloatti.Daffodil",
                                   "Color":  {
                                                 "g":  1,
-                                                "r":  0,
-                                                "b":  1,
+                                                "r":  1,
+                                                "b":  0.1922,
                                                 "a":  1
                                             }
                               },
     "IlluminationPresetSpec":  {
-                                   "Order":  10100
+                                   "Order":  11050
                                }
 }

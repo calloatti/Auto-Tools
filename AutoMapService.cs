@@ -27,6 +27,12 @@ namespace Calloatti.AutoTools
     private Automator _singleVisualizedAutomator;
     private Material _lineMaterial;
 
+    // Tracks if the graph topology has changed and needs a full rebuild
+    private bool _isDirty = true;
+
+    // Tracks the currently visible partition ID to prevent notification spam
+    private int _lastActivePartitionId = -1;
+
     [Inject]
     public AutoMapService(
         AutomatorRegistry automatorRegistry,
@@ -57,6 +63,9 @@ namespace Calloatti.AutoTools
     {
       _eventBus.Unregister(this);
       _inputService.OnToggleAutoMap -= ToggleAutoMap;
+
+      UnsubscribeFromRelations(); // <-- ADDED: Safely unhook the C# event if a building was selected during unload
+
       OnDispose();
     }
   }

@@ -2,13 +2,13 @@
     "IlluminationColorSpec":  {
                                   "Id":  "Calloatti.Fuchsia",
                                   "Color":  {
-                                                "g":  0,
-                                                "r":  1,
-                                                "b":  1,
+                                                "g":  0.051,
+                                                "r":  0.9294,
+                                                "b":  0.851,
                                                 "a":  1
                                             }
                               },
     "IlluminationPresetSpec":  {
-                                   "Order":  10030
+                                   "Order":  11200
                                }
 }

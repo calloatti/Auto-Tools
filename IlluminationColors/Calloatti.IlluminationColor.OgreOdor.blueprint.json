@@ -1,14 +1,14 @@
 ﻿{
     "IlluminationColorSpec":  {
-                                  "Id":  "Calloatti.ElectricBlue",
+                                  "Id":  "Calloatti.OgreOdor",
                                   "Color":  {
                                                 "g":  0.3216,
-                                                "r":  0.0235,
-                                                "b":  1,
+                                                "r":  0.9922,
+                                                "b":  0.251,
                                                 "a":  1
                                             }
                               },
     "IlluminationPresetSpec":  {
-                                   "Order":  11140
+                                   "Order":  11020
                                }
 }

@@ -3,12 +3,12 @@
                                   "Id":  "Calloatti.ElectricPurple",
                                   "Color":  {
                                                 "g":  0,
-                                                "r":  0.82,
+                                                "r":  0.8196,
                                                 "b":  1,
                                                 "a":  1
                                             }
                               },
     "IlluminationPresetSpec":  {
-                                   "Order":  10040
+                                   "Order":  11190
                                }
 }

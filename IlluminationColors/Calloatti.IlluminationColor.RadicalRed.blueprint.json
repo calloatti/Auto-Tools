@@ -1,14 +1,14 @@
 ﻿{
     "IlluminationColorSpec":  {
-                                  "Id":  "Calloatti.Rose",
+                                  "Id":  "Calloatti.RadicalRed",
                                   "Color":  {
-                                                "g":  0.27,
+                                                "g":  0.2078,
                                                 "r":  1,
-                                                "b":  0.49,
+                                                "b":  0.3686,
                                                 "a":  1
                                             }
                               },
     "IlluminationPresetSpec":  {
-                                   "Order":  10210
+                                   "Order":  11010
                                }
 }

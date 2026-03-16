@@ -13,13 +13,13 @@ namespace Calloatti.AutoTools
     [OnEvent]
     public void OnEntityInitialized(EntityInitializedEvent e)
     {
-      if (e.Entity.HasComponent<Automator>()) RefreshVisuals();
+      if (e.Entity.HasComponent<Automator>()) MarkDirty();
     }
 
     [OnEvent]
     public void OnEntityDeleted(EntityDeletedEvent e)
     {
-      if (e.Entity.HasComponent<Automator>()) RefreshVisuals();
+      if (e.Entity.HasComponent<Automator>()) MarkDirty();
     }
 
     [OnEvent]
@@ -30,7 +30,7 @@ namespace Calloatti.AutoTools
       if (newSelection != null) SubscribeToRelations(newSelection);
       else UnsubscribeFromRelations();
 
-      // Silently update the drawing
+      // Silently update the drawing WITHOUT triggering a heavy rebuild (unless dirty)
       RefreshVisuals();
     }
 
@@ -59,6 +59,12 @@ namespace Calloatti.AutoTools
 
     private void OnRelationsChanged(object sender, EventArgs e)
     {
+      MarkDirty();
+    }
+
+    private void MarkDirty()
+    {
+      _isDirty = true;
       RefreshVisuals();
     }
   }

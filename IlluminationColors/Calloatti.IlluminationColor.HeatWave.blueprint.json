@@ -1,14 +1,14 @@
 ﻿{
     "IlluminationColorSpec":  {
-                                  "Id":  "Calloatti.Raspberry",
+                                  "Id":  "Calloatti.HeatWave",
                                   "Color":  {
-                                                "g":  0.14,
+                                                "g":  0.4784,
                                                 "r":  1,
-                                                "b":  0.39,
+                                                "b":  0,
                                                 "a":  1
                                             }
                               },
     "IlluminationPresetSpec":  {
-                                   "Order":  10240
+                                   "Order":  11030
                                }
 }

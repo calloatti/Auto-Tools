@@ -1,32 +1,25 @@
-﻿    { new Color32(217, 125, 33, 255), "Default (Amber)" },
-    { new Color32(41, 150, 204, 255), "Bot Blue" },
-    { new Color32(133, 189, 204, 255), "Automator Blue" },
-    { new Color32(31, 204, 31, 255), "Standard Green" },
-    { new Color32(204, 51, 0, 255), "Standard Orange" },
-    { new Color32(230, 0, 0, 255), "Standard Red" },
-    { new Color32(18, 23, 26, 255), "Dimmed / Off" },
-    { new Color32(255, 255, 255, 255), "Pure White" },
-    { new Color32(255, 20, 135, 255), "Neon Rose" },
-    { new Color32(255, 10, 186, 255), "Hot Pink" },
-    { new Color32(255, 0, 255, 255), "Fuchsia" },
-    { new Color32(209, 0, 255, 255), "Electric Purple" },
-    { new Color32(150, 0, 255, 255), "Violet" },
-    { new Color32(79, 0, 255, 255), "Indigo" },
-    { new Color32(26, 64, 255, 255), "Royal Blue" },
-    { new Color32(0, 125, 255, 255), "Electric Blue" },
-    { new Color32(0, 181, 255, 255), "Azure" },
-    { new Color32(0, 255, 255, 255), "Cyan" },
-    { new Color32(0, 255, 191, 255), "Turquoise" },
-    { new Color32(26, 255, 145, 255), "Aqua" },
-    { new Color32(64, 255, 105, 255), "Mint Green" },
-    { new Color32(5, 255, 84, 255), "Spring Green" },
-    { new Color32(115, 255, 0, 255), "Vibrant Lime" },
-    { new Color32(171, 255, 0, 255), "Chartreuse" },
-    { new Color32(255, 255, 31, 255), "Lemon Yellow" },
-    { new Color32(255, 209, 0, 255), "Golden Yellow" },
-    { new Color32(255, 140, 36, 255), "Coral" },
-    { new Color32(255, 105, 79, 255), "Salmon Pink" },
-    { new Color32(255, 69, 125, 255), "Rose" },
-    { new Color32(235, 115, 255, 255), "Lavender" },
-    { new Color32(255, 46, 204, 255), "Magenta" },
-    { new Color32(255, 36, 99, 255), "Raspberry" },
+﻿#FFFFFF,White
+#FE01B1,Bright Pink
+#FF355E,Radical Red
+#FD5240,Ogre Odor
+#FF7A00,Heat Wave
+#FFAA1D,Bright Yellow
+#FFFF31,Daffodil
+#DDE26A,Booger Buster
+#AAFF32,Lime
+#21FC0D,Electric Green
+#0CB577,Green Teal
+#13EAC9,Aqua
+#0FFEF9,Bright Turquoise
+#02CCFE,Bright Sky Blue
+#1D5DEC,Azul
+#0652FF,Electric Blue
+#3A18B1,Indigo Blue
+#632DE9,Purple Blue
+#87421F,Fuzzy Wuzzy
+#AD0AFD,Bright Violet
+#D100FF,ElectricPurple
+#ED0DD9,Fuchsia
+#F504C9,Hot Magenta
+#E936A7,Frostbite
+#FE46A5,Barbie Pink

@@ -1,14 +1,14 @@
 ﻿{
     "IlluminationColorSpec":  {
-                                  "Id":  "Calloatti.Magenta",
+                                  "Id":  "Calloatti.BrightYellow",
                                   "Color":  {
-                                                "g":  0.18,
+                                                "g":  0.6667,
                                                 "r":  1,
-                                                "b":  0.8,
+                                                "b":  0.1137,
                                                 "a":  1
                                             }
                               },
     "IlluminationPresetSpec":  {
-                                   "Order":  10230
+                                   "Order":  11040
                                }
 }

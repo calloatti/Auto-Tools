@@ -1,0 +1,14 @@
+﻿{
+    "IlluminationColorSpec":  {
+                                  "Id":  "Calloatti.BarbiePink",
+                                  "Color":  {
+                                                "g":  0.2745,
+                                                "r":  0.9961,
+                                                "b":  0.6471,
+                                                "a":  1
+                                            }
+                              },
+    "IlluminationPresetSpec":  {
+                                   "Order":  11230
+                               }
+}

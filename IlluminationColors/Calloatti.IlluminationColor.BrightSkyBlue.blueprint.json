@@ -1,0 +1,14 @@
+﻿{
+    "IlluminationColorSpec":  {
+                                  "Id":  "Calloatti.BrightSkyBlue",
+                                  "Color":  {
+                                                "g":  0.8,
+                                                "r":  0.0078,
+                                                "b":  0.9961,
+                                                "a":  1
+                                            }
+                              },
+    "IlluminationPresetSpec":  {
+                                   "Order":  11120
+                               }
+}

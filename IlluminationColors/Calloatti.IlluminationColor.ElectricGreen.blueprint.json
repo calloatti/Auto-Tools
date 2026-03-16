@@ -1,0 +1,14 @@
+﻿{
+    "IlluminationColorSpec":  {
+                                  "Id":  "Calloatti.ElectricGreen",
+                                  "Color":  {
+                                                "g":  0.9882,
+                                                "r":  0.1294,
+                                                "b":  0.051,
+                                                "a":  1
+                                            }
+                              },
+    "IlluminationPresetSpec":  {
+                                   "Order":  11080
+                               }
+}

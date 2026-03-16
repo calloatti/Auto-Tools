@@ -1,0 +1,14 @@
+﻿{
+    "IlluminationColorSpec":  {
+                                  "Id":  "Calloatti.BoogerBuster",
+                                  "Color":  {
+                                                "g":  0.8863,
+                                                "r":  0.8667,
+                                                "b":  0.4157,
+                                                "a":  1
+                                            }
+                              },
+    "IlluminationPresetSpec":  {
+                                   "Order":  11060
+                               }
+}

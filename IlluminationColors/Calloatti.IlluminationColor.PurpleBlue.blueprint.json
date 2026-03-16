@@ -1,0 +1,14 @@
+﻿{
+    "IlluminationColorSpec":  {
+                                  "Id":  "Calloatti.PurpleBlue",
+                                  "Color":  {
+                                                "g":  0.1765,
+                                                "r":  0.3882,
+                                                "b":  0.9137,
+                                                "a":  1
+                                            }
+                              },
+    "IlluminationPresetSpec":  {
+                                   "Order":  11160
+                               }
+}

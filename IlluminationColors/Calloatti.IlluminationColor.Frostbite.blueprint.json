@@ -1,0 +1,14 @@
+﻿{
+    "IlluminationColorSpec":  {
+                                  "Id":  "Calloatti.Frostbite",
+                                  "Color":  {
+                                                "g":  0.2118,
+                                                "r":  0.9137,
+                                                "b":  0.6549,
+                                                "a":  1
+                                            }
+                              },
+    "IlluminationPresetSpec":  {
+                                   "Order":  11220
+                               }
+}
