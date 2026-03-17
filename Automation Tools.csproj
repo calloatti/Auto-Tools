@@ -70,6 +70,10 @@
     <None Update="changelog.txt"><CopyToOutputDirectory>Always</CopyToOutputDirectory></None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include=".metadata\" />
+  </ItemGroup>
+
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="powershell -Command &quot;Get-ChildItem '$(TargetDir)' -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force&quot;&#xD;&#xA;powershell -Command &quot;Get-ChildItem -Path '$(USERPROFILE)\Documents\Timberborn\Mods\$(ProjectName)' -Exclude 'workshop_data.json' -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force&quot;" /> 
   </Target>

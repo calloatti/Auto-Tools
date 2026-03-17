@@ -1,4 +1,5 @@
 ﻿using Bindito.Core;
+using Calloatti.Config;
 using Timberborn.Automation;
 using Timberborn.PlayerDataSystem;
 using Timberborn.QuickNotificationSystem;
@@ -19,8 +20,7 @@ namespace Calloatti.AutoTools
 
   public partial class AutoMapService : ILoadableSingleton, IPostLoadableSingleton, IUnloadableSingleton, IDisposable
   {
-    // Updated filename to AutoTools.txt
-    private readonly string _configPath = Path.Combine(PlayerDataFileService.PlayerDataDirectory, "AutoTools.txt");
+    private SimpleIniConfig _config;
 
     private readonly AutomatorRegistry _automatorRegistry;
     private readonly EventBus _eventBus;
@@ -33,6 +33,8 @@ namespace Calloatti.AutoTools
     private Material _lineMaterial;
     private bool _isDirty = true;
     private int _lastActivePartitionId = -1;
+
+    public bool IsReady { get; private set; } = false;
 
     [Inject]
     public AutoMapService(
@@ -55,19 +57,17 @@ namespace Calloatti.AutoTools
 
       try
       {
-        if (File.Exists(_configPath))
-        {
-          string content = File.ReadAllText(_configPath).Trim();
-          if (Enum.TryParse(content, out MapDisplayState restoredState))
-          {
-            _currentState = restoredState;
-          }
-        }
-        else
-        {
-          // Create default file if it doesn't exist (Default: Hidden)
-          SaveState();
-        }
+        _config = new SimpleIniConfig("AutoTools.txt");
+
+        _currentState = _config.GetEnum("MapDisplayState", MapDisplayState.Hidden);
+
+        // Load visual tuning variables with your new defaults
+        _connectionHeightFraction = _config.GetFloat("ConnectionHeightFraction", 0.75f);
+        _glowWidthMultiplier = _config.GetFloat("GlowWidthMultiplier", 8.0f);
+        _glowAlpha = _config.GetFloat("GlowAlpha", 0.2f);
+        _offStateBrightnessMultiplier = _config.GetFloat("OffStateBrightnessMultiplier", 0.6f);
+
+        _config.Save();
       }
       catch (Exception e)
       {
@@ -86,22 +86,20 @@ namespace Calloatti.AutoTools
       }
 
       RefreshVisuals(suppressInfoNotification: true);
+      IsReady = true;
     }
 
-    public void Unload()
-    {
-      SaveState();
-    }
+    public void Unload() => SaveState();
 
     public void SaveState()
     {
       try
       {
-        if (!Directory.Exists(PlayerDataFileService.PlayerDataDirectory))
+        if (_config != null)
         {
-          Directory.CreateDirectory(PlayerDataFileService.PlayerDataDirectory);
+          _config.Set("MapDisplayState", _currentState);
+          _config.Save();
         }
-        File.WriteAllText(_configPath, _currentState.ToString());
       }
       catch (Exception e)
       {
