@@ -1,9 +1,0 @@
-﻿#FFFFFF,White
-#FFFF00,Yellow
-#00FF00,Lime
-#00FFFF,Cyan
-#0000FF,Blue
-#FF00FF,Magenta
-#00BFFF,DeepSkyBlue
-#7FFF00,Chartreuse
-#FF007C,Winter Sky

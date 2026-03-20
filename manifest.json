@@ -1,8 +1,8 @@
 {
     "Name": "Automation Tools",
-    "Version": "1.3.7",
+    "Version": "1.3.8",
     "Id": "Calloatti.AutoTools",
-    "MinimumGameVersion": "1.0.12.6-e293177-xsw",
+    "MinimumGameVersion": "1.0.12.5",
     "Description": "Automation Tools",
     "RequiredMods": [
         {
