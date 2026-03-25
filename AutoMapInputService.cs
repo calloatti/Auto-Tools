@@ -22,7 +22,7 @@ namespace Calloatti.AutoTools
     public void Load()
     {
       _inputService.AddInputProcessor(this);
-      Debug.Log("[AutoTools] Input service loaded and listening for hotkeys.");
+      Debug.Log("[AutoTools] AddInputProcessor");
     }
 
     public bool ProcessInput()

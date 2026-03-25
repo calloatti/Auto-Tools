@@ -21,8 +21,6 @@ namespace Calloatti.AutoTools
 
   public partial class AutoMapService : ILoadableSingleton, IPostLoadableSingleton, IUnloadableSingleton, IDisposable
   {
-    private SimpleIniConfig _config;
-
     private readonly AutomatorRegistry _automatorRegistry;
     private readonly EventBus _eventBus;
     private readonly AutoMapInputService _inputService;
@@ -58,17 +56,14 @@ namespace Calloatti.AutoTools
 
       try
       {
-        _config = new SimpleIniConfig("AutoTools.txt");
-
-        _currentState = _config.GetEnum("MapDisplayState", MapDisplayState.Hidden);
+        _currentState = ModStarter.Config.GetEnum<MapDisplayState>("MapDisplayState");
 
         // Load visual tuning variables with your new defaults
-        _connectionHeightFraction = _config.GetFloat("ConnectionHeightFraction", 0.75f);
-        _glowWidthMultiplier = _config.GetFloat("GlowWidthMultiplier", 8.0f);
-        _glowAlpha = _config.GetFloat("GlowAlpha", 0.2f);
-        _offStateBrightnessMultiplier = _config.GetFloat("OffStateBrightnessMultiplier", 0.6f);
+        _connectionHeightFraction = ModStarter.Config.GetFloat("ConnectionHeightFraction");
+        _glowWidthMultiplier = ModStarter.Config.GetFloat("GlowWidthMultiplier");
+        _glowAlpha = ModStarter.Config.GetFloat("GlowAlpha");
+        _offStateBrightnessMultiplier = ModStarter.Config.GetFloat("OffStateBrightnessMultiplier");
 
-        _config.Save();
       }
       catch (Exception e)
       {
@@ -96,10 +91,10 @@ namespace Calloatti.AutoTools
     {
       try
       {
-        if (_config != null)
+        if (ModStarter.Config != null)
         {
-          _config.Set("MapDisplayState", _currentState);
-          _config.Save();
+          ModStarter.Config.Set("MapDisplayState", _currentState);
+          ModStarter.Config.Save();
         }
       }
       catch (Exception e)

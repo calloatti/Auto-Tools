@@ -98,6 +98,10 @@
     <None Update="ToolGroups\**\*"><CopyToOutputDirectory>Always</CopyToOutputDirectory></None>
     
     <None Update="manifest.json"><CopyToOutputDirectory>Always</CopyToOutputDirectory></None>
+    
+    <None Update="SimpleConfig.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="thumbnail.jpg"><CopyToOutputDirectory>Always</CopyToOutputDirectory></None>
     <None Update="thumbnail.png"><CopyToOutputDirectory>Always</CopyToOutputDirectory></None>
     <None Update="changelog.txt"><CopyToOutputDirectory>Always</CopyToOutputDirectory></None>

@@ -1,14 +1,18 @@
 ﻿using Bindito.Core;
 using Timberborn.Automation;
 using Timberborn.TemplateInstantiation;
+using UnityEngine;
 
 namespace Calloatti.AutoTools
 {
   [Context("Game")]
-  public class AutoMapConfigurator : Configurator
+  public class ModConfigurator : Configurator
   {
     protected override void Configure()
     {
+
+      Debug.Log("[AutoTools] Configurator.Configure");
+
       Bind<AutoMapInputService>().AsSingleton();
       Bind<AutoMapService>().AsSingleton();
       Bind<AutoMapHoverService>().AsSingleton();
