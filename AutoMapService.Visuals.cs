@@ -216,14 +216,31 @@ namespace Calloatti.AutoTools
     public GameObject ShowOnlyPartition(Automator selectedAutomator)
     {
       _automatorToNetwork.TryGetValue(selectedAutomator, out GameObject activeContainer);
-      if (_currentlyActivePartitionContainer == activeContainer) return activeContainer;
-      if (_currentlyActivePartitionContainer == null)
+
+      // FIX: Force hide all partitions if we just rebuilt them (_currentlyActivePartitionContainer == null),
+      // even if the newly selected automator is completely isolated (activeContainer == null).
+      if (_currentlyActivePartitionContainer != activeContainer || _currentlyActivePartitionContainer == null)
       {
-        foreach (GameObject container in _networkContainers) if (container != null) container.SetActive(false);
+        if (_currentlyActivePartitionContainer == null)
+        {
+          foreach (GameObject container in _networkContainers)
+          {
+            if (container != null) container.SetActive(false);
+          }
+        }
+        else
+        {
+          _currentlyActivePartitionContainer.SetActive(false);
+        }
+
+        if (activeContainer != null)
+        {
+          activeContainer.SetActive(true);
+        }
+
+        _currentlyActivePartitionContainer = activeContainer;
       }
-      else _currentlyActivePartitionContainer.SetActive(false);
-      if (activeContainer != null) activeContainer.SetActive(true);
-      _currentlyActivePartitionContainer = activeContainer;
+
       return activeContainer;
     }
 

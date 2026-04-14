@@ -1,3 +1,5 @@
+1.4.4
+Fix bug all networks visible when loading game
 1.4.3
 Localization updates
 1.4.2
